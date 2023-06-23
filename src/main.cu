@@ -2,7 +2,8 @@
 #include "../include/globals.hpp"
 #include "../include/utilities.hpp"
 #include "../include/sudoku.cuh"
+#include "../include/argument_parsing.hpp"
 
 int main (int argc, char** argv) {
-    cout << "Hello world!" << endl;
+    ArgumentParser arguments(argc, argv);
 }

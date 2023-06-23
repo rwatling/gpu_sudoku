@@ -1,5 +1,0 @@
-/home/rwatling/Projects/gpu_sudoku/CMakeFiles/_cuda.dir
-/home/rwatling/Projects/gpu_sudoku/CMakeFiles/_cpp.dir
-/home/rwatling/Projects/gpu_sudoku/CMakeFiles/main.dir
-/home/rwatling/Projects/gpu_sudoku/CMakeFiles/edit_cache.dir
-/home/rwatling/Projects/gpu_sudoku/CMakeFiles/rebuild_cache.dir

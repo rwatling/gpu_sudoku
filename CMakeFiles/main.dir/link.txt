@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++11 -O2 CMakeFiles/main.dir/src/main.cu.o CMakeFiles/main.dir/cmake_device_link.o -o main   -L/usr/lib/x86_64-linux-gnu/stubs  lib_cuda.a lib_cpp.a -lcudadevrt -lcudart_static -lrt -lpthread -ldl 

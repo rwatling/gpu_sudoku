@@ -1,2 +1,0 @@
-/usr/bin/ar qc lib_cpp.a CMakeFiles/_cpp.dir/src/argument_parsing.cpp.o CMakeFiles/_cpp.dir/src/timer.cpp.o CMakeFiles/_cpp.dir/src/utilities.cpp.o
-/usr/bin/ranlib lib_cpp.a

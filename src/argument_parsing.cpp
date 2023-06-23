@@ -5,10 +5,13 @@ ArgumentParser::ArgumentParser(int argc, char **argv)
 	this->argc = argc;
 	this->argv = argv;
 	
+	diff = EASY;
+	debug = false;
+
 	Parse();
 }
 	
-bool ArgumentParser::Parse()
+void ArgumentParser::Parse()
 {
 	try
 	{
@@ -39,9 +42,18 @@ bool ArgumentParser::Parse()
 		for(int i=1; i<argc-1; i=i+2)
 		{
 			
-			if (strcmp(argv[i], "--input") == 0) {
-				input = string(argv[i+1]);
-				hasInput = true;
+			if (strcmp(argv[i], "--difficulty") == 0) {
+				if(strcmp(argv[i+1], "easy") == 0) {
+					diff = EASY;
+				} else if(strcmp(argv[i+1], "medium") == 0) {
+					diff = MEDIUM;
+				} else if(strcmp(argv[i+1], "hard") == 0) {
+					diff = HARD;
+				} else if(strcmp(argv[i+1], "expert") == 0) {
+					diff = EXPERT;
+				}
+			} else if (strcmp(argv[i], "--debug") == 0) {
+				debug = true;
 			} else {
 				cout << "\nThere was an error parsing command line argument <" << argv[i] << ">\n";
 				cout << GenerateHelpString();
@@ -63,7 +75,8 @@ bool ArgumentParser::Parse()
 
 string ArgumentParser::GenerateHelpString(){
 	string str = "\nRequired arguments:";
-	str += "\n    [--input]: Input graph file. E.g., --input FacebookGraph.txt";
+	str += "\n    [--debug]: Extra messages and verficiation (Defualt: false) E.g. --debug true";
+	str += "\n    [--difficulty]: Puzzle difficulty of easy, medium, hard, or expert with the pre-filled cells determining the difficulty (Default: easy) E.g. --difficulty expert";
 	str += "\n\n";
 	return str;
 }

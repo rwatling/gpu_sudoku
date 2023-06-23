@@ -11,16 +11,13 @@ public:
 	int argc;
 	char** argv;
 
-	bool hasInput;
-	string input;
+	Difficulty diff;
+	bool debug;
 	
 	ArgumentParser(int argc, char **argv);
-	
-	bool Parse();
-	
+	void Parse();
 	string GenerateHelpString();
 	
 };
-
 
 #endif	//	ARGUMENT_PARSING_HPP
