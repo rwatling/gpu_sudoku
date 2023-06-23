@@ -1,0 +1,2 @@
+/usr/bin/ar qc lib_cuda.a CMakeFiles/_cuda.dir/src/sudoku.cu.o
+/usr/bin/ranlib lib_cuda.a
