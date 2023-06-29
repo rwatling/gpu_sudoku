@@ -8,63 +8,66 @@ bool cpuSudoku::inBox(unsigned int* puzzle, unsigned int selection, unsigned int
     if (row % 3 == 0) {
         // Left
         if (col % 3 == 0) {
-            //puzzle[selection+10]
-            //puzzle[selection+11]
-            //puzzle[selection+19]
-            //puzzle[selection+20]
+            if(puzzle[selection+10] == value) return true;
+            if(puzzle[selection+11] == value) return true;
+            if(puzzle[selection+19] == value) return true;
+            if(puzzle[selection+20] == value) return true;
         // Middle
         } else if (col % 3 == 1) {
-            //puzzle[selection+8]
-            //puzzle[selection+10]
-            //puzzle[selection+17]
-            //puzzle[selection+19]
+            if(puzzle[selection+8] == value) return true;
+            if(puzzle[selection+10] == value) return true;
+            if(puzzle[selection+17] == value) return true;
+            if(puzzle[selection+19] == value) return true;
         // Right
         } else if (col % 3 == 2 ) {
-            //puzzle[selection+7]
-            //puzzle[selection+8]
-            //puzzle[selection+16]
-            //puzzle[selection+17]
+            if(puzzle[selection+7] == value) return true;
+            if(puzzle[selection+8] == value) return true;
+            if(puzzle[selection+16] == value) return true;
+            if(puzzle[selection+17] == value) return true;
         }
 
     // Middle of box
     } else if (row % 3 == 1) {
         // Left
         if (col % 3 == 0) {
-            /*puzzle[selection+10]
-            puzzle[selection+11]
-            puzzle[selection+19]
-            puzzle[selection+20]*/
+            if (puzzle[selection-8] == value) return true;
+            if (puzzle[selection-7] == value) return true;
+            if (puzzle[selection+10] == value) return true;
+            if (puzzle[selection+11] == value) return true;
         // Middle
         } else if (col % 3 == 1) {
-            /*puzzle[selection+10]
-            puzzle[selection+11]
-            puzzle[selection+19]
-            puzzle[selection+20]*/
+            if (puzzle[selection-10] == value) return true;
+            if (puzzle[selection-8] == value) return true;
+            if (puzzle[selection+8] == value) return true;
+            if (puzzle[selection+10] == value) return true;
         // Right
         } else if (col % 3 == 2 ) {
-            /*puzzle[selection+10]
-            puzzle[selection+11]
-            puzzle[selection+19]
-            puzzle[selection+20]*/
+            if (puzzle[selection-10] == value) return true;
+            if (puzzle[selection-11] == value) return true;
+            if (puzzle[selection+7] == value) return true;
+            if (puzzle[selection+8] == value) return true;
         }
 
     // Bottom of box
     } else if (row % 3 == 2) {
+        //Left
         if (col % 3 == 0) {
-            /*puzzle[selection+10]
-            puzzle[selection+11]
-            puzzle[selection+19]
-            puzzle[selection+20]*/
+            if (puzzle[selection-17] == value) return true;
+            if (puzzle[selection-16] == value) return true;
+            if (puzzle[selection-8] == value) return true;
+            if (puzzle[selection-7] == value) return true;
+        //Middle
         } else if (col % 3 == 1) {
-            /*puzzle[selection+10]
-            puzzle[selection+11]
-            puzzle[selection+19]
-            puzzle[selection+20]*/
+            if (puzzle[selection-19] == value) return true;
+            if (puzzle[selection-17] == value) return true;
+            if (puzzle[selection-10] == value) return true;
+            if (puzzle[selection-8] == value) return true;
+        //Right
         } else if (col % 3 == 2 ) {
-            /*puzzle[selection+10]
-            puzzle[selection+11]
-            puzzle[selection+19]
-            puzzle[selection+20]*/
+            if (puzzle[selection-20] == value) return true;
+            if (puzzle[selection-19] == value) return true;
+            if (puzzle[selection-11] == value) return true;
+            if (puzzle[selection-10] == value) return true;
         }
     }
 
@@ -77,7 +80,7 @@ bool cpuSudoku::inRow(unsigned int* puzzle, unsigned int selection, unsigned int
     for (unsigned int i = 0; i < 9; i++) {
         unsigned int index = row * 9 + i;
         
-        if (puzzle[index] != selection) { 
+        if (index != selection) { 
             if (puzzle[index] == value) {
                 return true;
             }
@@ -93,7 +96,7 @@ bool cpuSudoku::inCol(unsigned int* puzzle, unsigned int selection, unsigned int
     for (int i = 0; i < 9; i++) {
         unsigned int index = i * 9 + col;
 
-        if (puzzle[index] != selection) { 
+        if (index != selection) { 
             if (puzzle[index] == value) {
                 return true;
             }

@@ -1,4 +1,4 @@
-#include "../include/argument_parsing.hpp"
+#include "../include/argumentParsing.hpp"
     
 ArgumentParser::ArgumentParser(int argc, char **argv)
 {

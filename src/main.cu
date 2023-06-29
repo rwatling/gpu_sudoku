@@ -3,7 +3,9 @@
 #include "../include/utilities.hpp"
 #include "../include/gpuSudoku.cuh"
 #include "../include/cpuSudoku.hpp"
-#include "../include/argument_parsing.hpp"
+#include "../include/argumentParsing.hpp"
+#include "../include/gpuErrorCheck.cuh"
+#include "../include/cudaIncludes.cuh"
 
 int main (int argc, char** argv) {
     ArgumentParser arguments(argc, argv);

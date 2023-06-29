@@ -20,7 +20,7 @@ file(GLOB main "${CMAKE_SOURCE_DIR}/src/main.cu")
 file(GLOB test "${CMAKE_SOURCE_DIR}/test/test.cpp")
 
 file(GLOB cpp_source_files
-  "${CMAKE_SOURCE_DIR}/src/argument_parsing.cpp"
+  "${CMAKE_SOURCE_DIR}/src/argumentParsing.cpp"
   "${CMAKE_SOURCE_DIR}/src/utilities.cpp"
   "${CMAKE_SOURCE_DIR}/src/timer.cpp"
   "${CMAKE_SOURCE_DIR}/src/cpuSudoku.cpp")

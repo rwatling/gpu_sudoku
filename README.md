@@ -1,14 +1,15 @@
 # GPU Sudoku Hobby Project
 Soduku solver for NVIDIA GPU and Serial CPU
 
-## Versions
+## Requirements
 
 `nvcc 11.5`
 
 `gcc 11.3`
 
+`Catch2 unit testing`
+
 ## Features
 
 * Sudoku generator
-* Sodoku solver -- if it cannot be solved, shows guesses
-* Serial CPU or GPU
+* Sodoku solver (serial or GPU parallel)

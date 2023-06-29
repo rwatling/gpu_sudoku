@@ -1,5 +1,5 @@
-#ifndef SUDOKU_HPP
-#define SUDOKU_HPP
+#ifndef CPU_SUDOKU_HPP
+#define CPU_SUDOKU_HPP
 
 #include "globals.hpp"
 
