@@ -24,6 +24,8 @@
 #include <climits>
 #include <stdint.h>
 
+#define SUDOKU_SIZE 9
+
 using namespace std;
 
 typedef unsigned int uint;
@@ -34,5 +36,11 @@ enum Difficulty : unsigned char {
     HARD = 3,
     EXPERT = 4
 };
+
+typedef struct Guess {
+    unsigned int x;
+    unsigned int y;
+    bool* values;
+} Guess;
 
 #endif 	//	GLOBALS_HPP

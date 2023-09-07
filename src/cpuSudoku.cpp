@@ -1,8 +1,8 @@
 #include "../include/cpuSudoku.hpp"
 
 bool cpuSudoku::inBox(unsigned int* puzzle, unsigned int selection, unsigned int value) {
-    unsigned int row = selection / 9;
-    unsigned int col = selection % 9;
+    unsigned int row = selection / SUDOKU_SIZE;
+    unsigned int col = selection % SUDOKU_SIZE;
 
     // Top of box
     if (row % 3 == 0) {
@@ -75,10 +75,10 @@ bool cpuSudoku::inBox(unsigned int* puzzle, unsigned int selection, unsigned int
 }
 
 bool cpuSudoku::inRow(unsigned int* puzzle, unsigned int selection, unsigned int value) {
-    unsigned int row = selection / 9;
+    unsigned int row = selection / SUDOKU_SIZE;
 
-    for (unsigned int i = 0; i < 9; i++) {
-        unsigned int index = row * 9 + i;
+    for (unsigned int i = 0; i < SUDOKU_SIZE; i++) {
+        unsigned int index = row * SUDOKU_SIZE + i;
         
         if (index != selection) { 
             if (puzzle[index] == value) {
@@ -91,10 +91,10 @@ bool cpuSudoku::inRow(unsigned int* puzzle, unsigned int selection, unsigned int
 }
 
 bool cpuSudoku::inCol(unsigned int* puzzle, unsigned int selection, unsigned int value) {
-    unsigned int col = selection % 9;
+    unsigned int col = selection % SUDOKU_SIZE;
 
-    for (int i = 0; i < 9; i++) {
-        unsigned int index = i * 9 + col;
+    for (int i = 0; i < SUDOKU_SIZE; i++) {
+        unsigned int index = i * SUDOKU_SIZE + col;
 
         if (index != selection) { 
             if (puzzle[index] == value) {
@@ -140,10 +140,10 @@ void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
 
     while (numSelected != 0) {
         unsigned int selection = rand() % totalCells;
-        unsigned int value = (rand() % 9) + 1;
+        unsigned int value = (rand() % SUDOKU_SIZE) + 1;
 
         if (puzzle[selection] == 0) {
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < SUDOKU_SIZE; i++) {
                 if (!inBox(puzzle, selection, value) &&
                     !inRow(puzzle, selection, value) && 
                     !inCol(puzzle, selection, value)) {
@@ -152,9 +152,42 @@ void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
                     numSelected--;
                     break;
                 } else {
-                    value = (value + 1) % 9;
+                    value = (value + 1) % SUDOKU_SIZE;
                 }
             }
         }
     }
+}
+
+void cpuSudoku::serialSolve(unsigned int* puzzle, vector<Guess> gVec) {
+
+    bool done = false;
+
+    while(!done) {
+        
+        unsigned int vecSize = gVec.size();
+
+        for (unsigned int i =0; i < vecSize; i++) {
+            for (unsigned int j = 0; j < SUDOKU_SIZE; j++) {
+                //unsigned int totalCandidates = 0;
+                if (gVec[i].values[j]) {
+                    // Check
+                    // if j+1 is (!inBox, !inRow, !inCol) then stay true
+                    // totalCandidates++
+                    // else gVec.guess = false
+                }
+
+                /*if (totalCandidates == 1) {
+                    for (unsigned int k = 0; k < SUDOKU_SIZE; k++) {
+                        if (gVec.guess[k])
+                            puzzle[gVec.guess.x*SUDOKU_SIZE+gVec.guess.y] = k + 1; 
+                    }
+                    done = false
+                }*/
+            }
+        }
+
+        done = true;
+    }
+
 }
