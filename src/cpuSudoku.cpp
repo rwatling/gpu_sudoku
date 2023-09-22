@@ -160,34 +160,4 @@ void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
 }
 
 void cpuSudoku::serialSolve(unsigned int* puzzle, vector<Guess> gVec) {
-
-    bool done = false;
-
-    while(!done) {
-        
-        unsigned int vecSize = gVec.size();
-
-        for (unsigned int i =0; i < vecSize; i++) {
-            for (unsigned int j = 0; j < SUDOKU_SIZE; j++) {
-                //unsigned int totalCandidates = 0;
-                if (gVec[i].values[j]) {
-                    // Check
-                    // if j+1 is (!inBox, !inRow, !inCol) then stay true
-                    // totalCandidates++
-                    // else gVec.guess = false
-                }
-
-                /*if (totalCandidates == 1) {
-                    for (unsigned int k = 0; k < SUDOKU_SIZE; k++) {
-                        if (gVec.guess[k])
-                            puzzle[gVec.guess.x*SUDOKU_SIZE+gVec.guess.y] = k + 1; 
-                    }
-                    done = false
-                }*/
-            }
-        }
-
-        done = true;
-    }
-
 }
