@@ -106,6 +106,10 @@ bool cpuSudoku::inCol(unsigned int* puzzle, unsigned int selection, unsigned int
     return false;
 }
 
+bool cpuSudoku::isSafe(unsigned int* puzzle, unsigned int selection, unsigned int value) {
+    return !inBox(puzzle, selection, value) && !inRow(puzzle, selection, value) && !inCol(puzzle, selection, value);
+}
+
 void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
     unsigned int numSelected;
 
@@ -144,9 +148,7 @@ void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
 
         if (puzzle[selection] == 0) {
             for (int i = 0; i < SUDOKU_SIZE; i++) {
-                if (!inBox(puzzle, selection, value) &&
-                    !inRow(puzzle, selection, value) && 
-                    !inCol(puzzle, selection, value)) {
+                if (isSafe(puzzle, selection, value)) {
 
                     puzzle[selection] = value;
                     numSelected--;
@@ -160,4 +162,5 @@ void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
 }
 
 void cpuSudoku::serialSolve(unsigned int* puzzle, vector<Guess> gVec) {
+    return;
 }

@@ -19,24 +19,4 @@ int main (int argc, char** argv) {
     cpuSudoku::generate(puzzle, arguments.diff);
     
     if (arguments.debug) utilities::PrintSudoku(puzzle);
-
-    vector<Guess> gVec;
-
-    for (int i = 0; i < SUDOKU_SIZE; i++) {
-        for (int j = 0; j < SUDOKU_SIZE; j++) {
-            Guess tempGuess;
-            tempGuess.x = i;
-            tempGuess.y = j;
-            tempGuess.values = (bool*) calloc(SUDOKU_SIZE, sizeof(bool));
-
-            if (puzzle[i*SUDOKU_SIZE+j] == 0) {
-                for (int k = 0; k < SUDOKU_SIZE; k++) {
-                    tempGuess.values[k] = true;
-                }
-                gVec.push_back(tempGuess);
-            }
-        }
-    }
-
-    cpuSudoku::serialSolve(puzzle, gVec);
 }
