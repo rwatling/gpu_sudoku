@@ -8,9 +8,9 @@ void PrintHelper() {
 	cout << "+\n";
 }
 
-void utilities::PrintSudoku(unsigned int* puzzle)
+void utilities::PrintSudoku(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE])
 {
-	unsigned int rowSize = 9;
+	unsigned int rowSize = SUDOKU_SIZE;
 	for (int i = 0; i < rowSize; i++) {
 		if ((i % 3 == 0)) {
 			PrintHelper();
@@ -22,10 +22,10 @@ void utilities::PrintSudoku(unsigned int* puzzle)
 				cout << "|";
 			}
 
-			if (puzzle[i*rowSize+j] == 0) {
+			if (puzzle[i][j] == 0) {
 				cout << "-";
 			} else {
-				cout << puzzle[i*rowSize + j];
+				cout << puzzle[i][j];
 			}
 
 			if (j % 3 !=  2) {

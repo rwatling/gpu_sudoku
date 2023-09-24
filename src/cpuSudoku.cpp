@@ -1,122 +1,51 @@
 #include "../include/cpuSudoku.hpp"
 
-bool cpuSudoku::inBox(unsigned int* puzzle, unsigned int selection, unsigned int value) {
-    unsigned int row = selection / SUDOKU_SIZE;
-    unsigned int col = selection % SUDOKU_SIZE;
-
-    // Top of box
-    if (row % 3 == 0) {
-        // Left
-        if (col % 3 == 0) {
-            if(puzzle[selection+10] == value) return true;
-            if(puzzle[selection+11] == value) return true;
-            if(puzzle[selection+19] == value) return true;
-            if(puzzle[selection+20] == value) return true;
-        // Middle
-        } else if (col % 3 == 1) {
-            if(puzzle[selection+8] == value) return true;
-            if(puzzle[selection+10] == value) return true;
-            if(puzzle[selection+17] == value) return true;
-            if(puzzle[selection+19] == value) return true;
-        // Right
-        } else if (col % 3 == 2 ) {
-            if(puzzle[selection+7] == value) return true;
-            if(puzzle[selection+8] == value) return true;
-            if(puzzle[selection+16] == value) return true;
-            if(puzzle[selection+17] == value) return true;
-        }
-
-    // Middle of box
-    } else if (row % 3 == 1) {
-        // Left
-        if (col % 3 == 0) {
-            if (puzzle[selection-8] == value) return true;
-            if (puzzle[selection-7] == value) return true;
-            if (puzzle[selection+10] == value) return true;
-            if (puzzle[selection+11] == value) return true;
-        // Middle
-        } else if (col % 3 == 1) {
-            if (puzzle[selection-10] == value) return true;
-            if (puzzle[selection-8] == value) return true;
-            if (puzzle[selection+8] == value) return true;
-            if (puzzle[selection+10] == value) return true;
-        // Right
-        } else if (col % 3 == 2 ) {
-            if (puzzle[selection-10] == value) return true;
-            if (puzzle[selection-11] == value) return true;
-            if (puzzle[selection+7] == value) return true;
-            if (puzzle[selection+8] == value) return true;
-        }
-
-    // Bottom of box
-    } else if (row % 3 == 2) {
-        //Left
-        if (col % 3 == 0) {
-            if (puzzle[selection-17] == value) return true;
-            if (puzzle[selection-16] == value) return true;
-            if (puzzle[selection-8] == value) return true;
-            if (puzzle[selection-7] == value) return true;
-        //Middle
-        } else if (col % 3 == 1) {
-            if (puzzle[selection-19] == value) return true;
-            if (puzzle[selection-17] == value) return true;
-            if (puzzle[selection-10] == value) return true;
-            if (puzzle[selection-8] == value) return true;
-        //Right
-        } else if (col % 3 == 2 ) {
-            if (puzzle[selection-20] == value) return true;
-            if (puzzle[selection-19] == value) return true;
-            if (puzzle[selection-11] == value) return true;
-            if (puzzle[selection-10] == value) return true;
+bool cpuSudoku::validBox(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value) {
+   // Check if the number already exists in the same 3x3 sub-grid
+    int subgridRow = (row / 3) * 3;
+    int subgridCol = (col / 3) * 3;
+    
+    for (int i = 0; i < (SUDOKU_SIZE / 3); i++) {
+        for (int j = 0; j < (SUDOKU_SIZE / 3); j++) {
+            if (puzzle[subgridRow + i][subgridCol + j] == value)
+                return false;
         }
     }
 
-    return false;
+    return true;
 }
 
-bool cpuSudoku::inRow(unsigned int* puzzle, unsigned int selection, unsigned int value) {
-    unsigned int row = selection / SUDOKU_SIZE;
-
-    for (unsigned int i = 0; i < SUDOKU_SIZE; i++) {
-        unsigned int index = row * SUDOKU_SIZE + i;
-        
-        if (index != selection) { 
-            if (puzzle[index] == value) {
-                return true;
-            }
-        }
+bool cpuSudoku::validRow(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value) {
+    // Check if the number already exists in the same row
+    for (int i = 0; i < 9; i++) {
+        if (puzzle[row][i] == value)
+            return false;
     }
     
-    return false;
+    return true;
 }
 
-bool cpuSudoku::inCol(unsigned int* puzzle, unsigned int selection, unsigned int value) {
-    unsigned int col = selection % SUDOKU_SIZE;
-
-    for (int i = 0; i < SUDOKU_SIZE; i++) {
-        unsigned int index = i * SUDOKU_SIZE + col;
-
-        if (index != selection) { 
-            if (puzzle[index] == value) {
-                return true;
-            }
-        }
+bool cpuSudoku::validCol(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value) {
+    // Check if the number already exists in the same column
+    for (int i = 0; i < 9; i++) {
+        if (puzzle[i][col] == value)
+            return false;
     }
 
-    return false;
+    return true;
 }
 
-bool cpuSudoku::isSafe(unsigned int* puzzle, unsigned int selection, unsigned int value) {
-    return !inBox(puzzle, selection, value) && !inRow(puzzle, selection, value) && !inCol(puzzle, selection, value);
+bool cpuSudoku::isSafe(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value) {
+    return validRow(puzzle, row, col, value) && validCol(puzzle, row, col, value) && validBox(puzzle, row, col, value);
 }
 
-void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
+void cpuSudoku::generate(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], Difficulty d){
     unsigned int numSelected;
 
     // Difficulty is determined by how many cells are filled in
     switch (d) {
         case EASY:
-            numSelected = 35;
+            numSelected = 40;
             break;
         case MEDIUM:
             numSelected = 30;
@@ -143,14 +72,15 @@ void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
     int totalCells = 81;
 
     while (numSelected != 0) {
-        unsigned int selection = rand() % totalCells;
-        unsigned int value = (rand() % SUDOKU_SIZE) + 1;
+        int selection = rand() % totalCells;
+        int row = selection / SUDOKU_SIZE;
+        int col = selection % SUDOKU_SIZE;
+        int value = (rand() % SUDOKU_SIZE) + 1;
 
         if (puzzle[selection] == 0) {
             for (int i = 0; i < SUDOKU_SIZE; i++) {
-                if (isSafe(puzzle, selection, value)) {
-
-                    puzzle[selection] = value;
+                if (isSafe(puzzle, row, col, value)) {
+                    puzzle[row][col] = value;
                     numSelected--;
                     break;
                 } else {
@@ -161,6 +91,43 @@ void cpuSudoku::generate(unsigned int* puzzle, Difficulty d){
     }
 }
 
-void cpuSudoku::serialSolve(unsigned int* puzzle, vector<Guess> gVec) {
-    return;
+bool findEmptyCell(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], unsigned int* row, unsigned int* col) {
+    for (*row = 0; *row < SUDOKU_SIZE; (*row)++) {
+        for (*col = 0; *col < SUDOKU_SIZE; (*col)++) {
+            if (puzzle[(*row)*SUDOKU_SIZE+(*col)] == 0) {
+                return true;  // Found an empty cell
+            }
+        }
+    }
+
+    return false;  // No empty cell found
 }
+
+// Recursive sudoku backtracking algorithm
+/*bool cpuSudoku::solve(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE]) {
+    unsigned int row = 0;
+    unsigned int col = 0;
+    
+    // Find the next empty cell or a cell with 0
+    if (!findEmptyCell(puzzle, &row, &col))
+        return true;  // Puzzle solved
+    
+    // Try all possible values from 1 to 9
+    for (unsigned int num = 1; num <= 9; num++) {
+        
+        // Check if the current value is valid
+        if (isSafe(puzzle, row*SUDOKU_SIZE+col, num)) {
+            
+            // Assign the value and recursively solve
+            puzzle[row*SUDOKU_SIZE+col] = num;
+            
+            if (cpuSudoku::solve(puzzle))
+                return true;  // Puzzle solved
+            
+            // Undo the assignment and try the next value if not able to solve
+            puzzle[row*SUDOKU_SIZE+col] = 0;
+        }
+    }
+    
+    return false;  // No solution found
+}*/

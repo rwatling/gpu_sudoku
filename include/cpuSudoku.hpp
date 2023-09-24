@@ -4,12 +4,12 @@
 #include "globals.hpp"
 
 namespace cpuSudoku {
-    bool inBox(unsigned int* puzzle, unsigned int selection, unsigned int value);
-    bool inRow(unsigned int* puzzle, unsigned int selection, unsigned int value);
-    bool inCol(unsigned int* puzzle, unsigned int selection, unsigned int value);
-    bool isSafe(unsigned int* puzzle, unsigned int selection, unsigned int value);
-    void generate(unsigned int* puzzle, Difficulty d);
-    void serialSolve(unsigned int* puzzle, vector<Guess> gVec);
+    bool validBox(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value);
+    bool validRow(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value);
+    bool validCol(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value);
+    bool isSafe(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value);
+    void generate(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], Difficulty d);
+    bool solve(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE], int row, int col, int value);
 }
 
 #endif

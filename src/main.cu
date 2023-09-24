@@ -10,13 +10,23 @@
 int main (int argc, char** argv) {
     ArgumentParser arguments(argc, argv);
 
-    unsigned int rows = SUDOKU_SIZE;
-    unsigned int columns = SUDOKU_SIZE;
-    unsigned int* puzzle = (unsigned int*) calloc(rows * columns, sizeof(unsigned int));
+    int puzzle[SUDOKU_SIZE][SUDOKU_SIZE];
+
+    for (int i =0; i < SUDOKU_SIZE; i++) {
+        for (int j =0; j < SUDOKU_SIZE; j++) {
+            puzzle[i][j]=0;
+        }
+    }
 
     if (arguments.debug) utilities::PrintSudoku(puzzle);
 
     cpuSudoku::generate(puzzle, arguments.diff);
     
     if (arguments.debug) utilities::PrintSudoku(puzzle);
+
+    /*cpuSudoku::solve(puzzle);
+
+    if (arguments.debug) utilities::PrintSudoku(puzzle);*/
+
+    return 0;
 }

@@ -5,7 +5,7 @@
 #include "globals.hpp"
 
 namespace utilities {
-	void PrintSudoku(unsigned int* puzzle);
+	void PrintSudoku(int puzzle[SUDOKU_SIZE][SUDOKU_SIZE]);
 }
 
 #endif	//	UTILITIES_HPP

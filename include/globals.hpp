@@ -37,10 +37,4 @@ enum Difficulty : unsigned char {
     EXPERT = 4
 };
 
-typedef struct Guess {
-    unsigned int x;
-    unsigned int y;
-    bool* values;
-} Guess;
-
 #endif 	//	GLOBALS_HPP
