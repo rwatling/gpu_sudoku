@@ -33,8 +33,7 @@ typedef unsigned int uint;
 enum Difficulty : unsigned char {
     EASY = 1,
     MEDIUM = 2,
-    HARD = 3,
-    EXPERT = 4
+    HARD = 3
 };
 
 #endif 	//	GLOBALS_HPP

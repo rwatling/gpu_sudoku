@@ -6,7 +6,7 @@ ArgumentParser::ArgumentParser(int argc, char **argv)
 	this->argv = argv;
 	
 	diff = EASY;
-	debug = false;
+	debug = true;
 
 	Parse();
 }
@@ -15,21 +15,18 @@ void ArgumentParser::Parse()
 {
 	try
 	{
-		if(argc == 1)
-		{
-			cout << GenerateHelpString();
-			exit(0);
-		}
-		
+		if (argc < 2)
+			return;
+
 		if(argc == 2) 
 			if ((strcmp(argv[1], "--help") == 0) || 
 				(strcmp(argv[1], "-help") == 0) || 
 				(strcmp(argv[1], "--h") == 0) || 
-				(strcmp(argv[1], "-h") == 0))
+				(strcmp(argv[1], "-h") == 0)) 
 			{
 				cout << GenerateHelpString();
 				exit(0);
-			}
+			} else { cout << " Unrecognized option" << endl; }
 		
 		if(argc%2 == 0)
 		{
@@ -42,15 +39,17 @@ void ArgumentParser::Parse()
 		for(int i=1; i<argc-1; i=i+2)
 		{
 			
-			if (strcmp(argv[i], "--difficulty") == 0) {
+			if (strcmp(argv[i], "--diff") == 0) {
 				if(strcmp(argv[i+1], "easy") == 0) {
 					diff = EASY;
 				} else if(strcmp(argv[i+1], "medium") == 0) {
 					diff = MEDIUM;
 				} else if(strcmp(argv[i+1], "hard") == 0) {
 					diff = HARD;
-				} else if(strcmp(argv[i+1], "expert") == 0) {
-					diff = EXPERT;
+				} else {
+					cout << "\nThere was an error parsing command line argument <" << argv[i] << ">\n";
+					cout << GenerateHelpString();
+					exit(0);
 				}
 			} else if (strcmp(argv[i], "--debug") == 0) {
 				debug = true;
@@ -75,8 +74,8 @@ void ArgumentParser::Parse()
 
 string ArgumentParser::GenerateHelpString(){
 	string str = "\nRequired arguments:";
-	str += "\n    [--debug]: Extra messages and verficiation (Defualt: false) E.g. --debug true";
-	str += "\n    [--difficulty]: Puzzle difficulty of easy, medium, hard, or expert with the pre-filled cells determining the difficulty (Default: easy) E.g. --difficulty expert";
+	str += "\n    [--debug]: Extra messages and verficiation (Defualt: true) E.g. --debug true";
+	str += "\n    [--diff: Puzzle difficulty of easy, medium, hard, or expert with the pre-filled cells determining the difficulty (Default: easy) E.g. --diff expert";
 	str += "\n\n";
 	return str;
 }

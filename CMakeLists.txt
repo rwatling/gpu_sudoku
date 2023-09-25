@@ -11,10 +11,6 @@ set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS}")
 set(MAIN_PROJECT "main")
 set(TESTS "tests")
 
-if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
-  set(CMAKE_CUDA_ARCHITECTURES "52;60;72")
-endif()
-
 ##### FILES
 file(GLOB main "${CMAKE_SOURCE_DIR}/src/main.cu")
 file(GLOB test "${CMAKE_SOURCE_DIR}/test/test.cpp")

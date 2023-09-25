@@ -3,320 +3,93 @@
 #include "../include/utilities.hpp"
 #include "../include/cpuSudoku.hpp"
 
-/***** Check row test cases *****/
-/*TEST_CASE ( "Sudoku row check case 1", "[row check case 1]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
+TEST_CASE ( "Sudoku row check case 1", "[row check case 1]") {
+    int puzzle[SUDOKU_SIZE][SUDOKU_SIZE];
+    memset(puzzle, 0, sizeof(puzzle[0][0]) * SUDOKU_SIZE * SUDOKU_SIZE);
     int value = 3;
-    int index1 = 0;
-    int index2 = 8;
 
-    puzzle[index1] = value;
-    puzzle[index2] = value;
+    puzzle[0][0] = value;
+    puzzle[0][8] = value;
 
-    REQUIRE(!cpuSudoku::validRow(puzzle, index1, value));
-    REQUIRE(!cpuSudoku::validRow(puzzle, index2, value));
+    REQUIRE(!cpuSudoku::validRow(puzzle, 0, 0, value));
+    REQUIRE(!cpuSudoku::validRow(puzzle, 0, 8, value));
+    REQUIRE(cpuSudoku::validRow(puzzle, 2, 0, value));
 }
 
 TEST_CASE ( "Sudoku row check case 2", "[row check case 2]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 7;
-    int index1 = 0;
-    int index2 = 5;
+    int puzzle[SUDOKU_SIZE][SUDOKU_SIZE];
+    memset(puzzle, 0, sizeof(puzzle[0][0]) * SUDOKU_SIZE * SUDOKU_SIZE);
+    int value = 3;
 
-    puzzle[index1] = value;
-    puzzle[index2] = value;
+    puzzle[0][0] = value;
+    puzzle[1][5] = value;
 
-    REQUIRE(!cpuSudoku::validRow(puzzle, index1, value));
-    REQUIRE(!cpuSudoku::validCol(puzzle, index2, value));
+    REQUIRE(!cpuSudoku::validRow(puzzle, 0, 0, value));
+    REQUIRE(!cpuSudoku::validRow(puzzle, 0, 5, value));
+    REQUIRE(!cpuSudoku::validRow(puzzle, 1, 5, value));
 }
 
 TEST_CASE ( "Sudoku row check case 3", "[row check case 3]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 0;
-    int index2 = 9;
+    int puzzle[SUDOKU_SIZE][SUDOKU_SIZE];
+    memset(puzzle, 0, sizeof(puzzle[0][0]) * SUDOKU_SIZE * SUDOKU_SIZE);
+    int value = 5;
 
-    puzzle[index1] = value;
-    puzzle[index2] = value;
+    puzzle[3][3] = value;
+    puzzle[7][5] = value + 1;
 
-    REQUIRE(!cpuSudoku::inRow(puzzle, index1, value));
-    REQUIRE(!cpuSudoku::inRow(puzzle, index2, value));
+    REQUIRE(!cpuSudoku::validRow(puzzle, 3, 3, value));
+    REQUIRE(cpuSudoku::validRow(puzzle, 7, 5, value));
+    REQUIRE(cpuSudoku::validRow(puzzle, 1, 5, value));
 }
 
-TEST_CASE ( "Sudoku row check case 4", "[row check case 4]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 0;
-    int index2 = 3;
+TEST_CASE ( "Sudoku col check case 1", "[col check case 1]") {
+    int puzzle[SUDOKU_SIZE][SUDOKU_SIZE];
+    memset(puzzle, 0, sizeof(puzzle[0][0]) * SUDOKU_SIZE * SUDOKU_SIZE);
+    int value = 3;
 
-    puzzle[index1] = value;
-    puzzle[index2] = value + 1;
+    puzzle[0][5] = value;
+    puzzle[1][5] = value;
 
-    REQUIRE(!cpuSudoku::inRow(puzzle, index1, value));
-    REQUIRE(!cpuSudoku::inRow(puzzle, index2, value + 1));
-}
-
-TEST_CASE ( "Sudoku row check case 5", "[row check case 5]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 0;
-    int index2 = index1;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(!cpuSudoku::inRow(puzzle, index1, value));
-    REQUIRE(!cpuSudoku::inRow(puzzle, index2, value));
-}*/
-
-/***** Check column test cases *****/
-/*TEST_CASE ( "Sudoku col check case 1", "[col check case 1]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 3;
-    int index2 = index1 + 9;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inCol(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inCol(puzzle, index2, value));
+    REQUIRE(cpuSudoku::validCol(puzzle, 0, 0, value));
+    REQUIRE(!cpuSudoku::validCol(puzzle, 0, 5, value));
+    REQUIRE(!cpuSudoku::validCol(puzzle, 1, 5, value));
 }
 
 TEST_CASE ( "Sudoku col check case 2", "[col check case 2]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 3;
-    int index2 = index1 + 12;
+    int puzzle[SUDOKU_SIZE][SUDOKU_SIZE];
+    memset(puzzle, 0, sizeof(puzzle[0][0]) * SUDOKU_SIZE * SUDOKU_SIZE);
+    int value = 5;
 
-    puzzle[index1] = value;
-    puzzle[index2] = value;
+    puzzle[3][3] = value;
+    puzzle[7][5] = value + 1;
 
-    REQUIRE(!cpuSudoku::inCol(puzzle, index1, value));
-    REQUIRE(!cpuSudoku::inCol(puzzle, index2, value));
+    REQUIRE(!cpuSudoku::validCol(puzzle, 2, 3, value));
+    REQUIRE(cpuSudoku::validCol(puzzle, 7, 5, value));
+    REQUIRE(cpuSudoku::validCol(puzzle, 1, 5, value));
 }
 
-TEST_CASE ( "Sudoku col check case 3", "[col check case 3]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 3;
-    int index2 = index1 + 9;
+TEST_CASE ( "Sudoku box check case 1", "[box check case 1]") {
+    int puzzle[SUDOKU_SIZE][SUDOKU_SIZE];
+    memset(puzzle, 0, sizeof(puzzle[0][0]) * SUDOKU_SIZE * SUDOKU_SIZE);
+    int value = 3;
 
-    puzzle[index1] = value;
-    puzzle[index2] = value + 1;
+    puzzle[0][2] = value;
+    puzzle[1][1] = value;
 
-    REQUIRE(!cpuSudoku::inCol(puzzle, index1, value));
-    REQUIRE(!cpuSudoku::inCol(puzzle, index2, value + 1));
-}
-
-TEST_CASE ( "Sudoku col check case 4", "[col check case 4]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 4;
-    int index2 = index1;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(!cpuSudoku::inCol(puzzle, index1, value));
-    REQUIRE(!cpuSudoku::inCol(puzzle, index2, value));
-}*/
-
-/***** Check box test cases *****/
-/*TEST_CASE ( "Sudoku box check case 1", "[box check case 1]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 0;
-    int index2 = index1 + 10;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
+    REQUIRE(!cpuSudoku::validBox(puzzle, 0, 0, value));
+    REQUIRE(cpuSudoku::validBox(puzzle, 4, 5, value));
+    REQUIRE(cpuSudoku::validBox(puzzle, 8, 5, value));
 }
 
 TEST_CASE ( "Sudoku box check case 2", "[box check case 2]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 0;
-    int index2 = index1 + 11;
+    int puzzle[SUDOKU_SIZE][SUDOKU_SIZE];
+    memset(puzzle, 0, sizeof(puzzle[0][0]) * SUDOKU_SIZE * SUDOKU_SIZE);
+    int value = 5;
 
-    puzzle[index1] = value;
-    puzzle[index2] = value;
+    puzzle[2][2] = value;
+    puzzle[1][0] = value + 1;
 
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
+    REQUIRE(!cpuSudoku::validBox(puzzle, 0, 0, value));
+    REQUIRE(!cpuSudoku::validBox(puzzle, 2, 2, value+1));
+    REQUIRE(cpuSudoku::validBox(puzzle, 1, 1, value+2));
 }
-
-TEST_CASE ( "Sudoku box check case 3", "[box check case 3]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 0;
-    int index2 = index1 + 19;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 4", "[box check case 4]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 0;
-    int index2 = index1 + 20;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 5", "[box check case 5]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 1;
-    int index2 = index1 + 8;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 6", "[box check case 6]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 4;
-    int index2 = index1 + 10;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 7", "[box check case 7]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 7;
-    int index2 = index1 + 17;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 8", "[box check case 8]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 1;
-    int index2 = index1 + 19;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 9", "[box check case 9]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 5;
-    int index2 = index1 + 7;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 10", "[box check case 10]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 5;
-    int index2 = index1 + 8;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 11", "[box check case 11]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 8;
-    int index2 = index1 + 16;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}
-
-TEST_CASE ( "Sudoku box check case 12", "[box check case 12]") {
-    int rows = 9;
-    int columns = 9;
-    int puzzle[rows][columns] = {};
-    int value = 2;
-    int index1 = 8;
-    int index2 = index1 + 17;
-
-    puzzle[index1] = value;
-    puzzle[index2] = value;
-
-    REQUIRE(cpuSudoku::inBox(puzzle, index1, value));
-    REQUIRE(cpuSudoku::inBox(puzzle, index2, value));
-}*/
